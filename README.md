@@ -61,8 +61,8 @@ The index $\mu$ identifies the pattern (from 1 to the total number $P$ of images
 It is useful to visualize both the original image and the binarized one to verify that the conversion is correct.
 
 <div style="text-align: center;">
-  <img src="orecchino.png" alt="Original image" width="20%">
-  <img src="hopfield-output.png" alt="Recovered binary pattern" width="20%">
+  <img src="Images/orecchino.png" alt="Original image" width="20%">
+  <img src="Images/hopfield-output.png" alt="Recovered binary pattern" width="20%">
 </div>
 
 ---
@@ -109,7 +109,7 @@ One starts from one of the stored patterns and corrupts it in one of these ways:
 - **Cropping**: a portion of the image is systematically inverted (for example, the lower half), simulating a partial image.
 
 <div style="text-align: center;">
-  <img src="hopfield-input.png" alt="Corrupted pattern" width="20%">
+  <img src="Images/hopfield-input.png" alt="Corrupted pattern" width="20%">
 </div>
 
 ### Update dynamics
