@@ -1,2 +1,4 @@
 test_acquisition.py
+test_learning.py
 __pycache__/
+weights.npy
