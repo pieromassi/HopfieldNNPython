@@ -3,7 +3,7 @@ import acquisition as a
 
 # Computes the NxN array of weights by Hebbs' rule
 def learn(patterns):
-    P, N = patterns.shape
+    N = patterns.shape[1]
 
     # Enables BLAS matmul
     patterns = patterns.astype(np.float32)

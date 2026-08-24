@@ -27,7 +27,7 @@ def fetch_and_select(n_per_person):
 # Then converts the image into a vector of +1 and -1
 def reshape_and_binarize(img, size, threshold=None):
 
-    # Converts img to pillow Image and applies bilinear interpolation
+    # Converts img to pillow Image and applies bicubic interpolation
     reshaped_img = Image.fromarray(img).resize((size, size), resample=Image.BICUBIC) 
 
     # Back to array
@@ -51,5 +51,5 @@ def load_patterns(n_per_person = 3, size = 32, threshold=None):
     P = 40 * n_per_person
 
     # Iterate to get (P, N) array of reshaped, binarized, flattened patterns
-    patterns = np.stack([reshape_and_binarize(raw_patterns[j, :, :], size) for j in range(P)])
+    patterns = np.stack([reshape_and_binarize(raw_patterns[j, :, :], size, threshold) for j in range(P)])
     return patterns
