@@ -51,6 +51,10 @@ def main():
 
     state, energies = conv.convergence(corrupted, weights, maxit=1000)
 
+    # Save result in .npy file
+    if not os.path.exists("stranger"):
+        np.save("stranger", state)
+
     # Display the original, corrupted and reconstructed image, side by side
     fig, axes = plt.subplots(1, 3, figsize=(9, 3.2))
     images = [pattern, corrupted, state]

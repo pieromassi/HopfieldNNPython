@@ -1,4 +1,7 @@
-tests/
+test_learning.py
+test_acquisition.py
+test_recall.py
 __pycache__/
 weights.npy
 synchronous_convergence.py
+stranger.npy
