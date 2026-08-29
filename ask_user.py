@@ -51,8 +51,10 @@ def ask_field():
 def ask_self_int():
     while True:
         self_int = input("Self interaction (yes/no): ").strip().lower()
-        if self_int in ("yes", "no"):
-            return self_int
+        if self_int == "yes":
+            return True
+        elif self_int == "no":
+                return False
         else:
             print("Choose between yes and no")
 

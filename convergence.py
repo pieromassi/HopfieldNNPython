@@ -50,7 +50,7 @@ def convergence(patterns, pattern, field="cubic", self_int=True, beta=None, maxi
     # Compute overlaps with self interaction
     overlaps = (patterns @ state) / N
 
-    energies = [0]
+    energies = []
 
     for j in range(maxit):
         prev_state = state.copy()
