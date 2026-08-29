@@ -2,16 +2,16 @@ def ask_noise():
     while True:
         try:
             # Asks the user a probability between 0 and 1
-            p = float(input("Flip probability (0-1): "))
+            p = float(input("Flip percentage (0-100): "))
 
-            if 0 <= p <= 1:
+            if 0 <= p <= 100:
                 return p
 
         except ValueError:
             pass
 
-        # Shows the same message both for non-numbers and numbers not in [0,1]
-        print("Enter a number between 0 and 1")
+        # Shows the same message both for non-numbers and numbers not in [0,100]
+        print("Enter a number between 0 and 100")
 
 
 def ask_crop(size):
@@ -38,3 +38,30 @@ def ask_mode():
             return mode
         else: 
             print("Choose between noise and crop")         
+
+
+def ask_field():
+    while True:
+        field = input("Field mode (hebb/cubic/exp): ").strip().lower()
+        if field in ("hebb", "cubic", "exp"):
+            return field
+        else:
+            print("Choose between hebb, cubic and exp")
+
+def ask_self_int():
+    while True:
+        self_int = input("Self interaction (yes/no): ").strip().lower()
+        if self_int in ("yes", "no"):
+            return self_int
+        else:
+            print("Choose between yes and no")
+
+def ask_beta():
+    try:
+        beta = float(input("Parameter beta (>1): "))
+        if beta < 1:
+            print("Choose a number greater than 1")
+        else:
+            return beta
+    except ValueError:
+        print("Choose a number greater than 1")

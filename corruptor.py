@@ -3,7 +3,7 @@ from math import isqrt
 
 # Flips each pixel independently with probability p
 def add_noise(image, p, rng):
-    flip = rng.random(image.shape[0]) < p
+    flip = rng.random(image.shape[0]) < p/100
     image[flip] *= -1
     return image
 

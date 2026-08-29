@@ -17,14 +17,14 @@ def main():
     print("mean overlap:", off_diag.mean(), "max:", off_diag.max())
     l = len(patterns)
 
-    # Check if there is weights.npy, otherwise creates it
-    if os.path.exists("weights.npy"):
-        weights = np.load("weights.npy")
-    else:
-        weights = learn.learn(patterns)
+    # # Check if there is weights.npy, otherwise creates it
+    # if os.path.exists("weights.npy"):
+    #     weights = np.load("weights.npy")
+    # else:
+    #     weights = learn.learn(patterns)
         
-        # Saves the weights array in a new .npy file
-        np.save("weights", weights)
+    #     # Saves the weights array in a new .npy file
+    #     np.save("weights", weights)
 
     # Choose an image to corrupt and try to reconstruct
     while True:
@@ -49,15 +49,19 @@ def main():
         height, width = ask.ask_crop(size)
         corrupted = cor.corruptor(pattern, mode, height=height, width=width)
 
-    state, energies = conv.convergence(corrupted, weights, maxit=1000)
+    field = ask.ask_field()
+    self_int = ask.ask_self_int()
+    beta = ask.ask_beta() if field == "exp" else None
 
-    # Save result in .npy file
-    if not os.path.exists("stranger"):
-        np.save("stranger", state)
+    result, energies = conv.convergence(patterns, corrupted, field=field, self_int=self_int, beta=beta)
+
+    # # Save result in .npy file
+    # if not os.path.exists("stranger"):
+    #     np.save("stranger", state)
 
     # Display the original, corrupted and reconstructed image, side by side
     fig, axes = plt.subplots(1, 3, figsize=(9, 3.2))
-    images = [pattern, corrupted, state]
+    images = [pattern, corrupted, result]
     titles = ["Original", "Corrupted", "Reconstructed"]
 
     for ax, image, title in zip(axes, images, titles):
@@ -66,12 +70,13 @@ def main():
         ax.axis("off")
 
     fig.tight_layout()
+
     plt.show()
 
     # Energy plot, should be decreasing
     plt.figure(figsize=(6, 4))
     plt.plot(energies, color="tab:blue")
-    plt.title("Energy over neuron updates")
+    plt.title(f"Energy over neuron updates: {field} field")
     plt.xlabel("Updates")
     plt.ylabel("Energy")
     plt.grid(True, alpha=0.3)
