@@ -1,8 +1,8 @@
-import os
+# import os
 import numpy as np
 import matplotlib.pyplot as plt
 import acquisition as a
-import learning as learn
+# import learning as learn
 import convergence as conv
 import corruptor as cor
 import ask_user as ask
@@ -50,10 +50,26 @@ def main():
         corrupted = cor.corruptor(pattern, mode, height=height, width=width)
 
     field = ask.ask_field()
-    self_int = ask.ask_self_int()
     beta = ask.ask_beta() if field == "exp" else None
+    self_int = ask.ask_self_int()
 
-    result, energies = conv.convergence(patterns, corrupted, field=field, self_int=self_int, beta=beta)
+    if self_int:
+        dynamics = ask.ask_dynamics()
+        convergence_fn = {
+            "deterministic": conv.deterministic,
+            "metropolis_hastings": conv.metropolis_hastings,
+            "simulated_annealing": conv.simulated_annealing,
+        }[dynamics]
+    else:
+        convergence_fn = conv.basic_convergence
+
+    result, energies = convergence_fn(
+        patterns, corrupted,
+        field=field, beta=beta, maxit=10**4, rng=None,
+    )
+
+    diff_energies = energies[1:] - energies[:-1]
+    # print(dE)
 
     # # Save result in .npy file
     # if not os.path.exists("stranger"):
@@ -79,6 +95,16 @@ def main():
     plt.title(f"Energy over neuron updates: {field} field")
     plt.xlabel("Updates")
     plt.ylabel("Energy")
+    plt.grid(True, alpha=0.3)
+    plt.tight_layout()
+    plt.show()
+
+    # Energy differences plot
+    plt.figure(figsize=(6, 4))
+    plt.plot(diff_energies, color="tab:red")
+    plt.title(f"Energy differences over neuron updates: {field} field")
+    plt.xlabel("Updates")
+    plt.ylabel("Differences")
     plt.grid(True, alpha=0.3)
     plt.tight_layout()
     plt.show()
