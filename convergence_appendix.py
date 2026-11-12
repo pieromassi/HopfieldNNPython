@@ -57,17 +57,15 @@ def _negative_sigmoid(x):
 
 
 def sigmoid(x):
+    x = np.asarray(x, dtype=np.float64)
     positive = x >= 0
     # Boolean array inversion is faster than another comparison
     negative = ~positive
 
-    # empty contains junk hence will be faster to allocate
-    # Zeros has to zero-out the array after allocation, no need for that
-    # See comment to the answer when it comes to dtype
-    result = np.empty_like(x, dtype=np.float64)
+    # empty contains junk hence will be faster to allocat
+    result = np.empty_like(x)
     result[positive] = _positive_sigmoid(x[positive])
     result[negative] = _negative_sigmoid(x[negative])
-
     return result
 
 
