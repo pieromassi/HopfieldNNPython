@@ -6,3 +6,4 @@ __pycache__/
 weights.npy
 synchronous_convergence.py
 stranger.npy
+data/

@@ -10,7 +10,24 @@ from math import isqrt
 
 def main():
 
-    patterns = a.load_patterns(n_per_person=10, size=64, threshold=None)
+    dataset = ask.ask_dataset()
+
+    print(f"Loading {dataset}; the first run may download the dataset...")
+
+    patterns = a.load_patterns(
+        dataset=dataset,
+        n_per_class=3,
+        size=None,
+        threshold=None,
+        data_home="data",
+        random_state=0,
+    )
+
+    print(
+        f"Loaded {len(patterns)} patterns "
+        f"of {patterns.shape[1]} neurons"
+    )
+
     P, N = patterns.shape
     corr = (patterns @ patterns.T) / N
     off_diag = corr[~np.eye(P, dtype=bool)]

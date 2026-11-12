@@ -1,3 +1,25 @@
+def ask_dataset():
+    choices = {
+        "1": "olivetti",
+        "2": "mnist",
+        "3": "fashion-mnist",
+        "4": "cifar-10",
+    }
+
+    while True:
+        value = input(
+            "Dataset: 1=Olivetti, 2=MNIST, "
+            "3=Fashion-MNIST, 4=CIFAR-10: "
+        ).strip().lower().replace("_", "-")
+
+        if value in choices:
+            return choices[value]
+        if value in choices.values():
+            return value
+
+        print("Enter a dataset name or a number from 1 to 4")
+
+
 def ask_noise():
     while True:
         try:
@@ -63,20 +85,6 @@ def ask_beta():
                 return beta
         except ValueError:
             print("Choose a number greater than 1")
-            continue
-
-
-def ask_n_per_person():
-    while True:
-        try:
-            n = int(input("Faces per person (1/10): "))
-            if 1 <= n <= 10:
-                return n
-            else:
-                print("Choose a number between 1 and 10")
-                continue
-        except ValueError:
-            print("Choose a number between 1 and 10")
             continue
 
 
